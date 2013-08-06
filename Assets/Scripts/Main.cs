@@ -10,6 +10,7 @@ public class Main : MonoBehaviour {
 		CurveMotion mEnemy = (CurveMotion)gEnemy.GetComponent(typeof(CurveMotion));
 		mEnemy.functionType = "linear";//"quadratic";
 		mEnemy.moveDirection = -1;
+		mEnemy.functionParameter = Mathf.PI/4;
 	}
 	
 	// Update is called once per frame
