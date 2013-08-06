@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown("space")){
+<<<<<<< HEAD
 			GameObject p1 = (GameObject)Instantiate(Resources.Load("Projectile"));
 			GameObject p2 = (GameObject)Instantiate(Resources.Load("Projectile"));
 
@@ -30,6 +31,14 @@ public class PlayerController : MonoBehaviour {
 			mP2.functionType = currentFunction;
 			mP2.functionParameter = currentParameter;			
 			mP2.moveDirection = -1;			
+=======
+			GameObject p = (GameObject)Instantiate(Resources.Load("Projectile"));
+			p.transform.position = new Vector3(0,0,10);
+			CurveMotion mP = (CurveMotion)p.GetComponent(typeof(CurveMotion));
+			mP.functionType = "linear";//"quadratic";
+			mP.functionParameter = currentParameter;
+			mP.moveDirection = 1;			
+>>>>>>> 166ab0814248cdf2f2796498ce97c46b844459e1
 		}
 			
 		if (Input.GetKey(KeyCode.UpArrow)) {
