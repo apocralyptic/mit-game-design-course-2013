@@ -6,7 +6,10 @@ public class CurveMotion : MonoBehaviour {
 	public float moveSpeed;
 	public float moveDirection;
 	public string functionType;
-	public float functionParameter = 0;
+	public float functionParameter = 0.0f;
+	
+	float frequencyScaling = 0.1f;
+	float exponentialScaling = 0.5f;
 	
 	// Use this for initialization
 	void Start () {
@@ -52,14 +55,18 @@ public class CurveMotion : MonoBehaviour {
 				break;
 			
 			case "hyperbolic":
+				newPosition.x = currentPosition.x + delta;
+				newPosition.y = param/newPosition.x;
 				break;
 			
 			case "exponential":
+				newPosition.x = currentPosition.x + delta;
+				newPosition.y = Mathf.Exp(exponentialScaling*param*newPosition.x);
 				break;
 
 			case "sinusoidal":
 				newPosition.x = currentPosition.x + delta;
-				newPosition.y = 5*Mathf.Sin(2*Mathf.PI*param*newPosition.x);
+				newPosition.y = 5*Mathf.Sin(2*Mathf.PI*frequencyScaling*param*newPosition.x);
 				break;
 		}		
 		
