@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
 			CurveMotion mP = (CurveMotion)p.GetComponent(typeof(CurveMotion));
 			mP.functionType = "linear";//"quadratic";
 			mP.functionParameter = currentParameter;
-			mP.setEquationFromStartPoint(p.transform.position);
 			mP.moveDirection = 1;			
 		}
 			

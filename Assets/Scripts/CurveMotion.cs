@@ -25,11 +25,8 @@ public class CurveMotion : MonoBehaviour {
 	public void setEquationFromStartPoint(Vector3 start){
 		switch(functionType){
 		case "linear":
-			Debug.Log (start.x);
-			Debug.Log (Mathf.Acos(start.x/start.y));
 			//one point must always be (0,0,0) and the other one is the "start"
 			functionParameter = Mathf.Atan(start.y/start.x);
-			Debug.Log (functionParameter);
 			break;
 		case "quadratic":
 			break;
