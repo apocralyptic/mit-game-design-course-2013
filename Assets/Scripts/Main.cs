@@ -13,14 +13,6 @@ public class Main : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown ("space")){
-			GameObject p = (GameObject)Instantiate(Resources.Load("Projectile"));
-			p.transform.position = new Vector3(0,0,10);
-			CurveMotion mP = (CurveMotion)p.GetComponent(typeof(CurveMotion));
-			mP.functionType = "linear";//"quadratic";
-			mP.moveDirection = 1;
-		}
-	
+	void Update () {	
 	}
 }
