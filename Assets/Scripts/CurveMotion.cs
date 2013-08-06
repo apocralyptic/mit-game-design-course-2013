@@ -32,6 +32,7 @@ public class CurveMotion : MonoBehaviour {
 			functionParameter = Mathf.Atan(start.y/start.x);
 			break;
 		case "quadratic":
+			functionParameter = start.y / (start.x * start.x);
 			break;
 		case "sinusoidal":
 			break;
