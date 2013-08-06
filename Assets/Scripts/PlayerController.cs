@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		
+		GALevel level = new GALevel();
+		// Add the level to the save queue
+		GoogleAnalytics.instance.Add(level);
+		// Upload ALL the items in the save queue to Google
+		GoogleAnalytics.instance.Dispatch();
 	
 	}
 	
@@ -29,7 +35,11 @@ public class PlayerController : MonoBehaviour {
 			CurveMotion mP2 = (CurveMotion)p2.GetComponent(typeof(CurveMotion));
 			mP2.functionType = currentFunction;
 			mP2.functionParameter = currentParameter;			
-			mP2.moveDirection = -1;			
+			mP2.moveDirection = -1;	
+			
+			GAEvent myEvent = new GAEvent("GameAction", "FireWeapon");
+            GoogleAnalytics.instance.Add(myEvent);
+            GoogleAnalytics.instance.Dispatch();
 	}
 			
 		if (Input.GetKey(KeyCode.UpArrow)) {
