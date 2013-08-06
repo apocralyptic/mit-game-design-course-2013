@@ -48,7 +48,7 @@ public class CurveMotion : MonoBehaviour {
 
 		    case "quadratic":
 				newPosition.x = currentPosition.x + delta;
-				newPosition.y = newPosition.x*newPosition.x;
+				newPosition.y = param*newPosition.x*newPosition.x;
 				break;
 			
 			case "hyperbolic":
