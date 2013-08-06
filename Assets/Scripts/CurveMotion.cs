@@ -27,12 +27,12 @@ public class CurveMotion : MonoBehaviour {
 	Vector3 MoveAlongCurve(Vector3 currentPosition, float delta, string type, float param) {
 		
 		Vector3 newPosition = currentPosition;		
-		newPosition.x = currentPosition.x + delta;  // Update x
 		
 		switch(functionType)
 		{
 			case "linear":
-				newPosition.y = param*newPosition.x;			
+ 			    newPosition.x = currentPosition.x + delta*Mathf.Cos(param);
+				newPosition.y = currentPosition.y + delta*Mathf.Sin(param);			
 				break;
 
 		    case "quadratic":
