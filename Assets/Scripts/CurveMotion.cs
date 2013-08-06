@@ -17,6 +17,10 @@ public class CurveMotion : MonoBehaviour {
 	void Update () {
 		float delta = Time.deltaTime*moveSpeed*moveDirection;
 		transform.position = MoveAlongCurve(transform.position,delta,functionType,functionParameter);
+		if(transform.position.x > 10 || transform.position.y > 10 || 
+			transform.position.x < -10 || transform.position.y < -10){
+			Destroy(this.gameObject);
+		}
 	}
 	
 	// 
@@ -53,12 +57,16 @@ public class CurveMotion : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider col) {
-		// Debug-draw all contact points and normals
-			/*if(typeof(contact.otherCollider.gameObject)==Enemy){
-				this.gameObject.renderer.material.color = new Color(255f,0f,0f,1f);
-			}*/
-			Debug.Log ("Collision");
+		//Debug.Log (this.tag + " : " + col.tag);
+		if(this.tag == "enemy" && col.tag == "projectile"){
+			Debug.Log ("Kill enemy");
+			Destroy(this.gameObject);
+		}else if(this.tag == "enemy" && col.tag == "enemy"){
+			Debug.Log ("Kill explosion");
+		}else if(this.tag == "enemy" && col.tag == "Player"){
+			Debug.Log("Kill player");
 		}
+	}
 
 }
 	
