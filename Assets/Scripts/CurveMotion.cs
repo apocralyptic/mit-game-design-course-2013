@@ -52,20 +52,14 @@ public class CurveMotion : MonoBehaviour {
 		return newPosition;
 	}
 	
-	void OnCollisionEnter(Collision collision) {
+	void OnTriggerEnter(Collider col) {
 		// Debug-draw all contact points and normals
-		foreach(ContactPoint contact in collision.contacts){
 			/*if(typeof(contact.otherCollider.gameObject)==Enemy){
 				this.gameObject.renderer.material.color = new Color(255f,0f,0f,1f);
 			}*/
+			Debug.Log ("Collision");
 		}
-		
-		// Play a sound if the coliding objects had a big impact.		
-		if (collision.relativeVelocity.magnitude > 2){
-			
-		}
-			
-	}
+
 }
 	
 	
