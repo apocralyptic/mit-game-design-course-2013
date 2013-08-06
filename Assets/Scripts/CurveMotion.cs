@@ -22,25 +22,26 @@ public class CurveMotion : MonoBehaviour {
 	// 
 	Vector3 MoveAlongCurve(Vector3 currentPosition, float delta, string type, float param) {
 		
-		Vector3 newPosition = currentPosition;
+		Vector3 newPosition = currentPosition;		
+		newPosition.x = currentPosition.x + delta;  // Update x
 		
 		switch(functionType)
 		{
 			case "linear":
-				newPosition.x = newPosition.x + delta;			
-				newPosition.y = newPosition.y + param*delta;			
+				newPosition.y = param*newPosition.x;			
 				break;
 
-		    case "parabola":
+		    case "quadratic":
+				newPosition.y = param*newPosition.x*newPosition.x;
 				break;
 			
-			case "hyperbola":
+			case "hyperbolic":
 				break;
 			
 			case "exponential":
 				break;
 
-			case "sinusoid":
+			case "sinusoidal":
 				break;
 		}		
 		
