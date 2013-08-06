@@ -20,14 +20,22 @@ public class PlayerController : MonoBehaviour {
 			mP.functionType = "linear";//"quadratic";
 			mP.functionParameter = currentParameter;			
 			mP.moveDirection = 1;
+			
+			GameObject p2 = (GameObject)Instantiate(Resources.Load("Projectile"));
+			p2.transform.position = new Vector3(0,0,10);
+			CurveMotion mP2 = (CurveMotion)p.GetComponent(typeof(CurveMotion));
+			mP2.functionType = "linear";//"quadratic";
+			mP2.functionParameter = currentParameter;			
+			mP2.moveDirection = -1;
+			
 		}
 			
-		if (Input.GetKeyDown(KeyCode.UpArrow)) {
+		if (Input.GetKey(KeyCode.UpArrow)) {
 			currentParameter += Time.deltaTime*changeRate;
 	
 		}
 			
-		if (Input.GetKeyDown(KeyCode.DownArrow)) {
+		if (Input.GetKey(KeyCode.DownArrow)) {
 			currentParameter -= Time.deltaTime*changeRate;
 		}
 	}
