@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour {
 			p.transform.position = new Vector3(0,0,10);
 			CurveMotion mP = (CurveMotion)p.GetComponent(typeof(CurveMotion));
 			mP.functionType = "linear";//"quadratic";
-			mP.functionParameter = currentParameter;			
+			mP.functionParameter = currentParameter;
+			mP.setEquationFromStartPoint(p.transform.position);
 			mP.moveDirection = 1;			
 		}
 			
