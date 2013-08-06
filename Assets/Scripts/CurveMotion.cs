@@ -42,6 +42,7 @@ public class CurveMotion : MonoBehaviour {
 				break;
 
 			case "sinusoidal":
+				newPosition.y = param * Mathf.Sin(2*Mathf.PI*50*newPosition.x);
 				break;
 		}		
 		
