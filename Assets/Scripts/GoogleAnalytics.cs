@@ -43,7 +43,7 @@ public class GoogleAnalytics : MonoBehaviour {
 
 		string screenResolution = Screen.width.ToString() + "x" + Screen.height.ToString();
 
-		sessionRequestParams["utmac"] = "UA-43000739-1";
+		sessionRequestParams["utmac"] = "UA-42978980-1";
 		sessionRequestParams["utmhn"] = SystemInfo.deviceType.ToString();
 		sessionRequestParams["utmfl"] = Application.unityVersion.ToString();	
 		sessionRequestParams["utmsc"] = "24-bit";
