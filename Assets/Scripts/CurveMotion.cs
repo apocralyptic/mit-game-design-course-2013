@@ -42,11 +42,29 @@ public class CurveMotion : MonoBehaviour {
 				break;
 
 			case "sinusoidal":
-				newPosition.y = param * Mathf.Sin(2*Mathf.PI*50*newPosition.x);
+				newPosition.y = param * Mathf.Sin(2*Mathf.PI*0.2f*newPosition.x);
 				break;
 		}		
 		
+		if(newPosition.x > 20 || newPosition.y > 20){
+			Destroy(this.gameObject);
+		}
 		return newPosition;
+	}
+	
+	void OnCollisionEnter(Collision collision) {
+		// Debug-draw all contact points and normals
+		foreach(ContactPoint contact in collision.contacts){
+			/*if(typeof(contact.otherCollider.gameObject)==Enemy){
+				this.gameObject.renderer.material.color = new Color(255f,0f,0f,1f);
+			}*/
+		}
+		
+		// Play a sound if the coliding objects had a big impact.		
+		if (collision.relativeVelocity.magnitude > 2){
+			
+		}
+			
 	}
 }
 	
