@@ -28,15 +28,16 @@ public class CurveMotion : MonoBehaviour {
 		
 		Vector3 newPosition = currentPosition;		
 		
-		switch(functionType)
-		{
+		switch(functionType) {
+
 			case "linear":
  			    newPosition.x = currentPosition.x + delta*Mathf.Cos(param);
 				newPosition.y = currentPosition.y + delta*Mathf.Sin(param);			
 				break;
 
 		    case "quadratic":
-				newPosition.y = param*newPosition.x*newPosition.x;
+				newPosition.x = currentPosition.x + delta;
+				newPosition.y = newPosition.x*newPosition.x;
 				break;
 			
 			case "hyperbolic":

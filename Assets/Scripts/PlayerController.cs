@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	
-	public float currentParameter = 0.0f;
+	public float currentParameter = 1.0f;
 	public float changeRate = 100.0f;
 	
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 			GameObject p = (GameObject)Instantiate(Resources.Load("Projectile"));
 			p.transform.position = new Vector3(0,0,10);
 			CurveMotion mP = (CurveMotion)p.GetComponent(typeof(CurveMotion));
-			mP.functionType = "linear";//"quadratic";
+			mP.functionType = "quadratic";
 			mP.functionParameter = currentParameter;			
 			mP.moveDirection = 1;			
 		}
