@@ -107,5 +107,8 @@ public class PlayerController : MonoBehaviour
 		mP1.functionType = currentFunction;
 		mP1.functionParameter = currentParameter;			
 		mP1.moveDirection = direction;		
+
+		GameObject obj = GameObject.Find("Main Camera");
+		obj.SendMessage("SetProjectileColor",mP1);		
 	}
 }

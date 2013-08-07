@@ -92,7 +92,7 @@ public class Main : MonoBehaviour {
 		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 		
-		SetProjectileColor(mEnemy,Color.red);
+		SetProjectileColor(mEnemy);
 	}
 	
 	void createQuadraticEnemy(int i){
@@ -110,7 +110,7 @@ public class Main : MonoBehaviour {
 		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 
-		SetProjectileColor(mEnemy,Color.blue);		
+		SetProjectileColor(mEnemy);		
 	}
 	
 	void createExponentialEnemy(int i){
@@ -128,7 +128,7 @@ public class Main : MonoBehaviour {
 		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 
-		SetProjectileColor(mEnemy,Color.green);	
+		SetProjectileColor(mEnemy);	
 	}
 	
 	void createSinusoidEnemy(int i){
@@ -146,12 +146,31 @@ public class Main : MonoBehaviour {
 		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 
-		SetProjectileColor(mEnemy,Color.magenta);	
+		SetProjectileColor(mEnemy);	
 	}
 	
-	void SetProjectileColor(CurveMotion proj, Color theColor) {
+	void SetProjectileColor(CurveMotion proj) {
 		Renderer projRend;
 		TrailRenderer trailRend;
+		Color theColor = Color.black;
+		
+		switch (proj.functionType) {
+		case "linear":
+			theColor = Color.red;
+			break;
+		case "quadratic":
+			theColor = Color.blue;
+			break;
+		/*case "hyperbolic":
+			functionParameter = start.x * start.y;
+			break;*/
+		case "exponential":
+			theColor = Color.green;
+			break;
+		case "sinusoidal":
+			theColor = Color.magenta;
+			break;
+		}		
 
 		projRend = (Renderer)proj.GetComponent("Renderer");
 		projRend.material.SetColor("_Color",theColor);
