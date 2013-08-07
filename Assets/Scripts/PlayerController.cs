@@ -42,18 +42,30 @@ public class PlayerController : MonoBehaviour
 		
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			currentFunction = "linear";
+			GAEvent myEvent = new GAEvent ("GameAction", "LinearWeapon");
+		    GoogleAnalytics.instance.Add (myEvent);
+		    GoogleAnalytics.instance.Dispatch ();
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			currentFunction = "quadratic";
+			GAEvent myEvent = new GAEvent ("GameAction", "QuadraticWeapon");
+		    GoogleAnalytics.instance.Add (myEvent);
+		    GoogleAnalytics.instance.Dispatch ();			
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			currentFunction = "exponential";
+			GAEvent myEvent = new GAEvent ("GameAction", "ExponentialWeapon");
+		    GoogleAnalytics.instance.Add (myEvent);
+		    GoogleAnalytics.instance.Dispatch ();			
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
+			GAEvent myEvent = new GAEvent ("GameAction", "SinusoidalWeapon");
+		    GoogleAnalytics.instance.Add (myEvent);
+		    GoogleAnalytics.instance.Dispatch ();			
 		}
 		
 		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
