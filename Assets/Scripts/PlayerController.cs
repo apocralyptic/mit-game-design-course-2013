@@ -21,7 +21,9 @@ public class PlayerController : MonoBehaviour
 		GoogleAnalytics.instance.Dispatch ();
 	
 	}
-	
+	public void changeFunction(string f){
+		this.currentFunction = f;
+	}
 	// Update is called once per frame
 	void Update ()
 	{
