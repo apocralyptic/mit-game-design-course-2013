@@ -136,8 +136,10 @@ public class GoogleAnalytics : MonoBehaviour {
 	//
 	public void Dispatch()
 	{
+		return;
 		for (int evtIndex=0; evtIndex<eventList.Count; evtIndex++)
 		{
+			
 			string urlRequestParams = BuildRequestString(eventList[evtIndex]);
 			string url = "http://www.google-analytics.com/__utm.gif?" + urlRequestParams;
 			StartCoroutine( MakeRequest(url, eventList[evtIndex])  );

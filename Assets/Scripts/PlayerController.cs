@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 		GoogleAnalytics.instance.Add (level);
 		// Upload ALL the items in the save queue to Google
 		GoogleAnalytics.instance.Dispatch ();
-	
 	}
 	public void changeFunction(string f){
 		this.currentFunction = f;
