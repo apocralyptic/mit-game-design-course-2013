@@ -90,9 +90,12 @@ public class CurveMotion : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 		//Debug.Log (this.tag + " : " + col.tag);
 		if(this.tag == "enemy" && col.tag == "projectile"){
-			Debug.Log ("Kill enemy");
-			((Main)GameObject.FindWithTag("MainCamera").camera.GetComponent(typeof(Main))).UpdateScore(1);
-			Destroy(this.gameObject);
+			//functionType
+			if(((CurveMotion)col.GetComponent(typeof(CurveMotion))).functionType == functionType){
+				Debug.Log ("Kill enemy");
+				((Main)GameObject.FindWithTag("MainCamera").camera.GetComponent(typeof(Main))).UpdateScore(1);
+				Destroy(this.gameObject);
+			}
 		}else if(this.tag == "enemy" && col.tag == "enemy"){
 			Debug.Log ("Kill explosion");
 		}else if(this.tag == "enemy" && col.tag == "Player"){
