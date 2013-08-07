@@ -4,6 +4,7 @@ using System.Collections;
 public class Main : MonoBehaviour {
 	
 	public int score;
+	public float speed = 0.5f;
 	public GUIText scoreDisplay;
 	public GUIText statusMessage;
 	public GameObject[] enemies = new GameObject[2];
@@ -14,7 +15,7 @@ public class Main : MonoBehaviour {
 	
 	void init(){
 		Random.seed = (int)System.DateTime.Now.Ticks;
-		int f = Random.Range(1,5);
+		int f = Random.Range(1,4);
 		for(int i=0;i< enemies.Length; i++){
 			switch(f){
 			case 1:
@@ -36,7 +37,21 @@ public class Main : MonoBehaviour {
 			}
 		}
 	}
-
+	
+	void OnGUI () {
+		if (GUI.Button (new Rect (10,10,150,50), "1: Linear")) {
+			print ("You clicked the button!");
+		}
+		if (GUI.Button (new Rect (10,70,150,50), "2: Quadratic")) {
+			print ("You clicked the button!");
+		}
+		if (GUI.Button (new Rect (10,130,150,50), "3: Exponential")) {
+			print ("You clicked the button!");
+		}
+		if (GUI.Button (new Rect (10,190,150,50), "4: Sinusoid")) {
+			print ("You clicked the button!");
+		}
+	}
 	// Update is called once per frame
 	void Update () {
 		bool create = true;
@@ -58,7 +73,8 @@ public class Main : MonoBehaviour {
 	
 	void KillPlayer(){
 		statusMessage.text = ("YOU HAVE DIED. YOU ARE DEAD.");
-		return;
+		score = 0;
+		scoreDisplay.text = "Score: " + score;
 	}
 	
 	void createLinearEnemy(int i){
@@ -73,7 +89,7 @@ public class Main : MonoBehaviour {
 		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
 		mEnemy.functionType = "linear";
 		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = 3f;
+		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 	}
 	
@@ -89,7 +105,7 @@ public class Main : MonoBehaviour {
 		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
 		mEnemy.functionType = "quadratic";
 		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = 1f;
+		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 	}
 	
@@ -105,7 +121,7 @@ public class Main : MonoBehaviour {
 		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
 		mEnemy.functionType = "exponential";
 		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = 1f;
+		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 	}
 	
@@ -121,7 +137,7 @@ public class Main : MonoBehaviour {
 		mEnemy.functionType = "sinusoidal";
 		mEnemy.functionParameter = freq;
 		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = 1f;
+		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 	}
 }
