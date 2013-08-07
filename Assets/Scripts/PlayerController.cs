@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	public float changeRate = 100.0f;
 	public float shootDelay = 0.25f;  // Delay between shots
 	
+	public AudioClip shootSound;
 	bool canShoot = true;
 	
 	// Use this for initialization
@@ -76,8 +77,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator PlayerShoot ()
 	{
 		canShoot = false;
-		//audio.PlayOneShot(hitSound);
-		//targetRoot.Play("down"); 
+		audio.PlayOneShot(shootSound);
 		
 		if(currentFunction=="hyperbolic"){
 			createProjectile(new Vector3(1,currentParameter,10),1);

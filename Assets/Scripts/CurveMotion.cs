@@ -11,6 +11,8 @@ public class CurveMotion : MonoBehaviour {
 	float frequencyScaling = 0.1f;
 	float exponentialScaling = 0.5f;
 	
+	public AudioClip playerDieSound;
+	
 	// Use this for initialization
 	void Start () {
 	}
@@ -91,15 +93,17 @@ public class CurveMotion : MonoBehaviour {
 		//Debug.Log (this.tag + " : " + col.tag);
 		if(this.tag == "enemy" && col.tag == "projectile"){
 			if(((CurveMotion)col.GetComponent(typeof(CurveMotion))).functionType == functionType){
-				((Main)GameObject.FindWithTag("MainCamera").camera.GetComponent(typeof(Main))).UpdateScore(1);
+				GameObject obj = GameObject.Find("Main Camera");
+				obj.SendMessage("UpdateScore",1);
+				obj.SendMessage("PlayEnemyDieSound");
 				Destroy(this.gameObject);
 			}
 		}else if(this.tag == "enemy" && col.tag == "enemy"){
-			Debug.Log ("Kill explosion");
+			//Debug.Log ("Kill explosion");
 		}else if(this.tag == "enemy" && col.tag == "Player"){
 			GameObject obj = GameObject.Find("Main Camera");
-			((Main)GameObject.FindWithTag("MainCamera").camera.GetComponent(typeof(Main))).UpdateScore(1);
 			obj.SendMessage("KillPlayer");
+			audio.PlayOneShot(playerDieSound);
 		}
 	}
 

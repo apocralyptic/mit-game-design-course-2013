@@ -7,6 +7,7 @@ public class Main : MonoBehaviour {
 	public float speed = 0.5f;
 	public GUIText scoreDisplay;
 	public GUIText statusMessage;
+	public AudioClip enemyDieSound;
 	public GameObject[] enemies = new GameObject[2];
 	// Use this for initialization
 	void Start () {
@@ -147,6 +148,10 @@ public class Main : MonoBehaviour {
 		mEnemy.setEquationFromStartPoint(pos);
 
 		SetProjectileColor(mEnemy);	
+	}
+	
+	void PlayEnemyDieSound() {
+		audio.PlayOneShot(enemyDieSound);
 	}
 	
 	void SetProjectileColor(CurveMotion proj) {
