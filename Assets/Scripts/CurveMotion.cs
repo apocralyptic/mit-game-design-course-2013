@@ -86,10 +86,10 @@ public class CurveMotion : MonoBehaviour {
 		}else if(this.tag == "enemy" && col.tag == "enemy"){
 			Debug.Log ("Kill explosion");
 		}else if(this.tag == "enemy" && col.tag == "Player"){
-			Debug.Log("Kill player");
+			GameObject obj = GameObject.Find("Main Camera");
+			obj.SendMessage("KillPlayer");
 		}
 	}
 
 }
-	
 	

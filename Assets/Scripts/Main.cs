@@ -4,6 +4,8 @@ using System.Collections;
 public class Main : MonoBehaviour {
 	
 	public int score;
+	public GUIText scoreDisplay;
+	public GUIText statusMessage;
 	public GameObject[] enemies = new GameObject[2];
 	// Use this for initialization
 	void Start () {
@@ -40,7 +42,13 @@ public class Main : MonoBehaviour {
 	public int UpdateScore(int i)
 	{
 		score = score + i;
-		Debug.Log("Score! " + score);
+		scoreDisplay.text = ("Score: " + score);
 		return score;
 	}	
+	
+	void KillPlayer()
+	{
+		statusMessage.text = ("YOU HAVE DIED. YOU ARE DEAD.");
+		return;
+	}
 }
