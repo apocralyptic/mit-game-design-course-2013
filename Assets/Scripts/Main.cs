@@ -15,15 +15,15 @@ public class Main : MonoBehaviour {
 	void createEnemy(int i){
 		Random.seed = (int)System.DateTime.Now.Ticks;
 			int sign1 = Random.Range(0,100)>50?1:-1;
-			int sign2 = Random.Range(0,100)>50?1:-1;
+			int sign2 = 1; //Random.Range(0,100)>50?1:-1;
 			int n1 = sign1 * Random.Range(3,10);
 			int n2 = sign2 * Random.Range(3,10);
 			Vector3 pos = new Vector3(n1, n2, 10);
-			Debug.Log(sign1+" "+sign2+" " + n1+ " " +n2);
+			//Debug.Log(sign1+" "+sign2+" " + n1+ " " +n2);
 			enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
 			enemies[i].transform.position = pos;
 			CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
-			mEnemy.functionType = "quadratic";//"quadratic";
+			mEnemy.functionType = "exponential";//"quadratic";
 			mEnemy.moveDirection = -sign1;
 			mEnemy.moveSpeed = 1f;
 			mEnemy.setEquationFromStartPoint(pos);
@@ -42,5 +42,5 @@ public class Main : MonoBehaviour {
 		score = score + i;
 		Debug.Log("Score! " + score);
 		return score;
-	}	
+	}
 }

@@ -49,16 +49,16 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
-			currentFunction = "hyperbolic";
-		}
-
-		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "exponential";
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha5)) {
+		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
 		}
+		
+		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
+			currentFunction = "hyperbolic";
+		}*/
 	}
 
 	IEnumerator PlayerShoot ()
@@ -66,28 +66,34 @@ public class PlayerController : MonoBehaviour
 		canShoot = false;
 		//audio.PlayOneShot(hitSound);
 		//targetRoot.Play("down"); 
-
-		GameObject p1 = (GameObject)Instantiate (Resources.Load ("Projectile"));
-		GameObject p2 = (GameObject)Instantiate (Resources.Load ("Projectile"));
-
-		p1.transform.position = new Vector3 (0, 0, 10);
-		p2.transform.position = new Vector3 (0, 0, 10);
-
-		CurveMotion mP1 = (CurveMotion)p1.GetComponent (typeof(CurveMotion));
-		mP1.functionType = currentFunction;
-		mP1.functionParameter = currentParameter;			
-		mP1.moveDirection = 1;			
-
-		CurveMotion mP2 = (CurveMotion)p2.GetComponent (typeof(CurveMotion));
-		mP2.functionType = currentFunction;
-		mP2.functionParameter = currentParameter;			
-		mP2.moveDirection = -1;	
+		
+		if(currentFunction=="hyperbolic"){
+			createProjectile(new Vector3(1,currentParameter,10),1);
+			createProjectile(new Vector3(1,currentParameter,10),-1);
 			
+			createProjectile(new Vector3(-1,-currentParameter,10),1);
+			createProjectile(new Vector3(-1,-currentParameter,10),-1);
+			
+		}else{
+		
+			createProjectile(new Vector3(0,0,10),1);
+			createProjectile(new Vector3(0,0,10),-1);
+			
+		}
 		GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon");
 		GoogleAnalytics.instance.Add (myEvent);
 		GoogleAnalytics.instance.Dispatch ();
 		
 		yield return new WaitForSeconds(shootDelay);
 		canShoot = true;
+	}
+	
+	void createProjectile(Vector3 pos, int direction){
+		GameObject p1 = (GameObject)Instantiate (Resources.Load ("Projectile"));
+		p1.transform.position = pos;
+		CurveMotion mP1 = (CurveMotion)p1.GetComponent (typeof(CurveMotion));
+		mP1.functionType = currentFunction;
+		mP1.functionParameter = currentParameter;			
+		mP1.moveDirection = direction;		
 	}
 }

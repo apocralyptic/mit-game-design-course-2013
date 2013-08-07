@@ -34,6 +34,12 @@ public class CurveMotion : MonoBehaviour {
 		case "quadratic":
 			functionParameter = start.y / (start.x * start.x);
 			break;
+		/*case "hyperbolic":
+			functionParameter = start.x * start.y;
+			break;*/
+		case "exponential":
+			functionParameter = Mathf.Log(start.y)/(start.x * exponentialScaling);
+			break;
 		case "sinusoidal":
 			break;
 		}
@@ -55,14 +61,14 @@ public class CurveMotion : MonoBehaviour {
 				newPosition.y = param*newPosition.x*newPosition.x;
 				break;
 			
-			case "hyperbolic":
+			/*case "hyperbolic":
 				newPosition.x = currentPosition.x + delta;
 				newPosition.y = param/newPosition.x;
-				break;
+				break;*/
 			
 			case "exponential":
 				newPosition.x = currentPosition.x + delta;
-				newPosition.y = Mathf.Exp(exponentialScaling*param*newPosition.x);
+				newPosition.y = Mathf.Exp(exponentialScaling*param*newPosition.x) - 1;
 				break;
 
 			case "sinusoidal":
