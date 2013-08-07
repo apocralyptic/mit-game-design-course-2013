@@ -75,6 +75,8 @@ public class Main : MonoBehaviour {
 		mEnemy.moveDirection = -sign1;
 		mEnemy.moveSpeed = 3f;
 		mEnemy.setEquationFromStartPoint(pos);
+		
+		SetProjectileColor(mEnemy,Color.red);
 	}
 	
 	void createQuadraticEnemy(int i){
@@ -91,6 +93,8 @@ public class Main : MonoBehaviour {
 		mEnemy.moveDirection = -sign1;
 		mEnemy.moveSpeed = 1f;
 		mEnemy.setEquationFromStartPoint(pos);
+
+		SetProjectileColor(mEnemy,Color.blue);		
 	}
 	
 	void createExponentialEnemy(int i){
@@ -107,6 +111,8 @@ public class Main : MonoBehaviour {
 		mEnemy.moveDirection = -sign1;
 		mEnemy.moveSpeed = 1f;
 		mEnemy.setEquationFromStartPoint(pos);
+
+		SetProjectileColor(mEnemy,Color.green);	
 	}
 	
 	void createSinusoidEnemy(int i){
@@ -123,5 +129,18 @@ public class Main : MonoBehaviour {
 		mEnemy.moveDirection = -sign1;
 		mEnemy.moveSpeed = 1f;
 		mEnemy.setEquationFromStartPoint(pos);
+
+		SetProjectileColor(mEnemy,Color.magenta);	
+	}
+	
+	void SetProjectileColor(CurveMotion proj, Color theColor) {
+		Renderer projRend;
+		TrailRenderer trailRend;
+
+		projRend = (Renderer)proj.GetComponent("Renderer");
+		projRend.material.SetColor("_Color",theColor);
+
+		trailRend = (TrailRenderer)proj.GetComponent("TrailRenderer");
+		trailRend.material.SetColor("_Color",theColor);
 	}
 }
