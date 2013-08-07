@@ -15,7 +15,7 @@ public class Main : MonoBehaviour {
 	
 	void init(){
 		Random.seed = (int)System.DateTime.Now.Ticks;
-		int f = Random.Range(1,4);
+		int f = Random.Range(1,5);
 		for(int i=0;i< enemies.Length; i++){
 			switch(f){
 			case 1:
