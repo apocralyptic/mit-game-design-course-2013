@@ -40,17 +40,25 @@ public class Main : MonoBehaviour {
 	}
 	
 	void OnGUI () {
+		GUI.color = Color.red;
 		if (GUI.Button (new Rect (10,10,150,50), "1: Linear")) {
-			print ("You clicked the button!");
+			GameObject obj = GameObject.Find("Player");
+			obj.SendMessage("changeFunction","linear");		
 		}
+		GUI.color = Color.blue;
 		if (GUI.Button (new Rect (10,70,150,50), "2: Quadratic")) {
-			print ("You clicked the button!");
+			GameObject obj = GameObject.Find("Player");
+			obj.SendMessage("changeFunction","quadratic");
 		}
+		GUI.color = Color.green;
 		if (GUI.Button (new Rect (10,130,150,50), "3: Exponential")) {
-			print ("You clicked the button!");
+			GameObject obj = GameObject.Find("Player");
+			obj.SendMessage("changeFunction","exponential");
 		}
+		GUI.color = Color.magenta;
 		if (GUI.Button (new Rect (10,190,150,50), "4: Sinusoid")) {
-			print ("You clicked the button!");
+			GameObject obj = GameObject.Find("Player");
+			obj.SendMessage("changeFunction","sinusoid");
 		}
 	}
 	// Update is called once per frame
