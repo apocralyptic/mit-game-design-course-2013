@@ -93,8 +93,8 @@ public class Main : MonoBehaviour {
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		int sign1 = Random.Range(0,100)>50?1:-1;
 		int sign2 = Random.Range(0,100)>50?1:-1;
-		int n1 = sign1 * Random.Range(3,10);
-		int n2 = sign2 * Random.Range(3,10);
+		int n1 = sign1 * 10;//Random.Range(3,10);
+		int n2 = sign2 * 10;//Random.Range(3,10);
 		Vector3 pos = new Vector3(n1, n2, 10);
 		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
 		enemies[i].transform.position = pos;
@@ -111,8 +111,8 @@ public class Main : MonoBehaviour {
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		int sign1 = Random.Range(0,100)>50?1:-1;
 		int sign2 = Random.Range(0,100)>50?1:-1;
-		int n1 = sign1 * Random.Range(3,10);
-		int n2 = sign2 * Random.Range(3,10);
+		int n1 = sign1 * 10;//Random.Range(3,10);
+		int n2 = sign2 * 10;//Random.Range(3,10);
 		Vector3 pos = new Vector3(n1, n2, 10);
 		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
 		enemies[i].transform.position = pos;
@@ -129,8 +129,8 @@ public class Main : MonoBehaviour {
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		int sign1 = Random.Range(0,100)>50?1:-1;
 		int sign2 = 1;//Y needs to be always positive
-		int n1 = sign1 * Random.Range(3,10);
-		int n2 = sign2 * Random.Range(3,10);
+		int n1 = sign1 * 10;//Random.Range(3,10);
+		int n2 = sign2 * 10;//Random.Range(3,10);
 		Vector3 pos = new Vector3(n1, n2, 10);
 		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
 		enemies[i].transform.position = pos;
