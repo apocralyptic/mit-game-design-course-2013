@@ -8,7 +8,9 @@ public class Main : MonoBehaviour {
 	public GUIText scoreDisplay;
 	public GUIText statusMessage;
 	public AudioClip enemyDieSound;
-	public GameObject[] enemies = new GameObject[2];
+	public AudioClip playerDieSound;
+	public static int numberOfEnemies = 4;
+	public GameObject[] enemies = new GameObject[numberOfEnemies];
 	// Use this for initialization
 	void Start () {
 		init ();
@@ -81,6 +83,7 @@ public class Main : MonoBehaviour {
 	}	
 	
 	void KillPlayer(){
+		audio.PlayOneShot(playerDieSound);
 		statusMessage.text = ("YOU HAVE DIED. YOU ARE DEAD.");
 		score = 0;
 		scoreDisplay.text = "Score: " + score;
@@ -98,7 +101,7 @@ public class Main : MonoBehaviour {
 		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
 		mEnemy.functionType = "linear";
 		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
+		mEnemy.moveSpeed = 2 + speed + (0.2f*(int)(score/10));
 		mEnemy.setEquationFromStartPoint(pos);
 		
 		SetProjectileColor(mEnemy);

@@ -11,8 +11,6 @@ public class CurveMotion : MonoBehaviour {
 	float frequencyScaling = 0.1f;
 	float exponentialScaling = 0.5f;
 	
-	public AudioClip playerDieSound;
-	
 	// Use this for initialization
 	void Start () {
 	}
@@ -103,7 +101,6 @@ public class CurveMotion : MonoBehaviour {
 		}else if(this.tag == "enemy" && col.tag == "Player"){
 			GameObject obj = GameObject.Find("Main Camera");
 			obj.SendMessage("KillPlayer");
-			audio.PlayOneShot(playerDieSound);
 		}
 	}
 
