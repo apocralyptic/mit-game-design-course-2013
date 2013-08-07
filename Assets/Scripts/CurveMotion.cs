@@ -41,6 +41,10 @@ public class CurveMotion : MonoBehaviour {
 			functionParameter = Mathf.Log(start.y)/(start.x * exponentialScaling);
 			break;
 		case "sinusoidal":
+			
+			float y = 5*Mathf.Sin(2*Mathf.PI*frequencyScaling*functionParameter*start.x);
+			Vector3 n = new Vector3(start.x,y,10);
+			transform.position = n;
 			break;
 		}
 	}
