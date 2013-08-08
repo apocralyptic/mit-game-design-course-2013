@@ -9,14 +9,15 @@ public class PlayerController : MonoBehaviour
 	public float shootDelay = 0.25f;  // Delay between shots
 	
     float currentParameter;	
-	float currentInputLevel;
+	int currentInputLevel = 3;
 	public AudioClip shootSound;
 	bool canShoot = true;
+	
 	
 	// Use this for initialization
 	void Start ()
 	{
-//		currentParameter
+		currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
 		
 		GALevel level = new GALevel ();
 		// Add the level to the save queue
@@ -29,20 +30,29 @@ public class PlayerController : MonoBehaviour
 	}
 	// Update is called once per frame
 	void Update ()
-	{
+	{		
 		if (Input.GetKeyDown ("space")) {
 			if (canShoot) {
 				StartCoroutine ("PlayerShoot");
 			}
 		}
 			
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			currentParameter += Time.deltaTime * changeRate;
-	
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			if (currentInputLevel < Main.nInputLevels-1) {
+				currentInputLevel++;
+				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
+				Debug.Log(currentInputLevel);
+				Debug.Log(currentParameter);
+			}	
 		}
 			
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			currentParameter -= Time.deltaTime * changeRate;
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			if (currentInputLevel > 0) {
+				currentInputLevel--;
+				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
+				Debug.Log(currentInputLevel);
+				Debug.Log(currentParameter);
+			}	
 		}
 		
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
