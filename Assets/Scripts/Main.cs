@@ -13,6 +13,12 @@ public class Main : MonoBehaviour {
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
 	public Material[] enemyMaterials = new Material[numberOfEnemies];
 	
+	public static int nInputLevels = 6;  // Number of intensity levels
+	public static float[] linearInputLevels = {-1.1781f, -0.7854f, -0.3927f, 0.3927f, 0.7854f, 1.1781f}; 
+	public static float[] quadInputLevels = {-3.0f, -2.0f, -1.0f, 1.0f, 2.0f, 3.0f}; 
+	public static float[] expInputLevels = {-2.0f, -1.0f, -0.5f, 0.5f, 1.0f, 2.0f}; 
+	public static float[] sinInputLevels = {0.5f, 1.0f, 1.5f, 2.0f, 2.5f, 3.0f}; 	
+	
 	// Use this for initialization
 	void Start () {
 		init ();
@@ -202,4 +208,33 @@ public class Main : MonoBehaviour {
 		trailRend = (TrailRenderer)proj.GetComponent("TrailRenderer");
 		trailRend.material.SetColor("_Color",theColor);
 	}
+	
+	float GetParameterValue(int index, string functionType) {
+
+		float param;
+		
+		switch (functionType) {
+		case "linear":
+			param = linearInputLevels[index];
+			break;
+		case "quadratic":
+			param = quadInputLevels[index];
+			break;
+		/*case "hyperbolic":
+			functionParameter = start.x * start.y;
+			break;*/
+		case "exponential":
+			param = expInputLevels[index];
+			break;
+		case "sinusoidal":
+			param = sinInputLevels[index];
+			break;
+		default:
+			param = 0.0f;
+			break;
+		}		
+
+		return param;
+	}
+	
 }

@@ -4,17 +4,20 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 	
-	public float currentParameter = 1.0f;
 	public string currentFunction = "linear";
 	public float changeRate = 100.0f;
 	public float shootDelay = 0.25f;  // Delay between shots
 	
+    float currentParameter;	
+	float currentInputLevel;
 	public AudioClip shootSound;
 	bool canShoot = true;
 	
 	// Use this for initialization
 	void Start ()
 	{
+//		currentParameter
+		
 		GALevel level = new GALevel ();
 		// Add the level to the save queue
 		GoogleAnalytics.instance.Add (level);
