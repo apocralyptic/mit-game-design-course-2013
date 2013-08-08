@@ -11,6 +11,8 @@ public class Main : MonoBehaviour {
 	public AudioClip playerDieSound;
 	public static int numberOfEnemies = 4;
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
+	public Material[] enemyMaterials = new Material[numberOfEnemies];
+	
 	// Use this for initialization
 	void Start () {
 		init ();
@@ -169,27 +171,33 @@ public class Main : MonoBehaviour {
 		Renderer projRend;
 		TrailRenderer trailRend;
 		Color theColor = Color.black;
+		Material theMaterial = enemyMaterials[0];
 		
 		switch (proj.functionType) {
 		case "linear":
 			theColor = Color.red;
+			theMaterial = enemyMaterials[0];
 			break;
 		case "quadratic":
 			theColor = Color.blue;
+			theMaterial = enemyMaterials[1];
 			break;
 		/*case "hyperbolic":
 			functionParameter = start.x * start.y;
 			break;*/
 		case "exponential":
 			theColor = Color.green;
+			theMaterial = enemyMaterials[2];
 			break;
 		case "sinusoidal":
 			theColor = Color.magenta;
+			theMaterial = enemyMaterials[3];
 			break;
 		}		
 
 		projRend = (Renderer)proj.GetComponent("Renderer");
-		projRend.material.SetColor("_Color",theColor);
+		projRend.material = theMaterial;
+		
 
 		trailRend = (TrailRenderer)proj.GetComponent("TrailRenderer");
 		trailRend.material.SetColor("_Color",theColor);
