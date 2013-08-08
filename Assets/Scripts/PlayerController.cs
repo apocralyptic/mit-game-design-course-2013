@@ -5,8 +5,8 @@ public class PlayerController : MonoBehaviour
 {
 	
 	public string currentFunction = "linear";
-	public float changeRate = 100.0f;
-	public float shootDelay = 0.25f;  // Delay between shots
+//	public float changeRate = 100.0f;
+	public float shootDelay = 0.5f;  // Delay between shots
 	
     float currentParameter;	
 	int currentInputLevel = 3;
