@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
 	public GameObject userButton;
 	Vector3 buttonDiff;
 	
-	float[] buttonPositions = new float[Main.nInputLevels];
-	
 	// Use this for initialization
 	void Start ()
 	{

@@ -181,22 +181,22 @@ public class Main : MonoBehaviour {
 		
 		switch (proj.functionType) {
 		case "linear":
-			theColor = Color.red;
+			theColor = new Color(0.00f,0.80f,0.00f,1.00f);
 			theMaterial = enemyMaterials[0];
 			break;
 		case "quadratic":
-			theColor = Color.blue;
+			theColor = new Color(0.00f,0.00f,0.90f,1.00f);
 			theMaterial = enemyMaterials[1];
 			break;
 		/*case "hyperbolic":
 			functionParameter = start.x * start.y;
 			break;*/
 		case "exponential":
-			theColor = Color.green;
+			theColor = new Color(0.90f,0.00f,0.00f,1.00f);
 			theMaterial = enemyMaterials[2];
 			break;
 		case "sinusoidal":
-			theColor = Color.magenta;
+			theColor = new Color(0.90f,0.00f,0.90f,1.00f);
 			theMaterial = enemyMaterials[3];
 			break;
 		}		
