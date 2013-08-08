@@ -7,20 +7,27 @@ public class PlayerController : MonoBehaviour
 	public string currentFunction = "linear";
 	public float changeRate = 100.0f;
 	public float shootDelay = 0.25f;  // Delay between shots
-	
     float currentParameter;	
 	int currentInputLevel = 3;
 	public AudioClip shootSound;
 	bool canShoot = true;
-	
+
 	public GameObject userButton;
 	Vector3 buttonDiff;
 	
-	float[] buttonPositions = new float[Main.nInputLevels];
+	GameObject[] capsule = new GameObject[4];
+	//float[] buttonPositions = new float[Main.nInputLevels];
 	
 	// Use this for initialization
 	void Start ()
 	{
+		for(int i = 0;i<capsule.Length;i++){
+			capsule[i] = GameObject.CreatePrimitive(PrimitiveType.Plane);
+			capsule[i].name = "t"+i;
+			capsule[i].transform.position = new Vector3(0,0,0);
+			capsule[i].transform.localEulerAngles = new Vector3(270,0,0);
+			capsule[i].transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+		}
 		// Read button positions for GUI management
 		buttonDiff = new Vector3(0, GameObject.Find("Meter Hash 1").transform.position.y - GameObject.Find("Meter Hash 0").transform.position.y,0);
 		currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
@@ -35,8 +42,11 @@ public class PlayerController : MonoBehaviour
 		this.currentFunction = f;
 	}
 	// Update is called once per frame
+	void LateUpdate(){
+		showTarget();
+	}
 	void Update ()
-	{			
+	{
 		if (Input.GetKeyDown ("space")) {
 			if (canShoot) {
 				StartCoroutine ("PlayerShoot");
@@ -86,30 +96,20 @@ public class PlayerController : MonoBehaviour
 		    GoogleAnalytics.instance.Add (myEvent);
 		    GoogleAnalytics.instance.Dispatch ();			
 		}
-		
 		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
 			currentFunction = "hyperbolic";
 		}*/
 	}
-
+	
+	
 	IEnumerator PlayerShoot ()
 	{
 		canShoot = false;
 		audio.PlayOneShot(shootSound);
-		
-		if(currentFunction=="hyperbolic"){
-			createProjectile(new Vector3(1,currentParameter,10),1);
-			createProjectile(new Vector3(1,currentParameter,10),-1);
-			
-			createProjectile(new Vector3(-1,-currentParameter,10),1);
-			createProjectile(new Vector3(-1,-currentParameter,10),-1);
-			
-		}else{
-		
-			createProjectile(new Vector3(0,0,10),1);
-			createProjectile(new Vector3(0,0,10),-1);
-			
-		}
+
+		createProjectile(new Vector3(0,0,10),1,"Projectile");
+		createProjectile(new Vector3(0,0,10),-1,"Projectile");
+
 		GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon");
 		GoogleAnalytics.instance.Add (myEvent);
 		GoogleAnalytics.instance.Dispatch ();
@@ -118,8 +118,8 @@ public class PlayerController : MonoBehaviour
 		canShoot = true;
 	}
 	
-	void createProjectile(Vector3 pos, int direction){
-		GameObject p1 = (GameObject)Instantiate (Resources.Load ("Projectile"));
+	void createProjectile(Vector3 pos, int direction,string type){
+		GameObject p1 = (GameObject)Instantiate (Resources.Load (type));
 		p1.transform.position = pos;
 		CurveMotion mP1 = (CurveMotion)p1.GetComponent (typeof(CurveMotion));
 		mP1.functionType = currentFunction;
@@ -127,6 +127,42 @@ public class PlayerController : MonoBehaviour
 		mP1.moveDirection = direction;		
 
 		GameObject obj = GameObject.Find("Main Camera");
-		obj.SendMessage("SetProjectileColor",mP1);		
+		if(type=="Projectile"){
+			obj.SendMessage("SetProjectileColor",mP1);
+		}
 	}
+	
+	void showTarget(){
+		Vector3[] x = new Vector3[4];
+		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,currentFunction,currentParameter),4);
+		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,currentFunction,currentParameter),4);
+		x[2] = new Vector3(CurveMotion.getX (9.9f,currentFunction,currentParameter),9.9f,4);
+		x[3] = new Vector3(CurveMotion.getX (-9.9f,currentFunction,currentParameter),-9.9f,4);
+		
+		for(int i=0;i<x.Length;i++){
+			GameObject capsule = GameObject.Find("t"+i);
+			if((!float.IsNaN(x[i].y)) && (!float.IsNaN(x[i].x)) &&
+				Mathf.Abs(x[i].y) <= 11 && Mathf.Abs(x[i].x) <=11){
+					capsule.transform.position = x[i];
+					capsule.renderer.enabled = true;
+				
+			}else{
+				capsule.renderer.enabled = false;
+			}
+			
+		}
+		if(currentFunction=="quadratic"){
+			if((!float.IsNaN(x[2].y)) && (!float.IsNaN(x[2].x)) &&
+				Mathf.Abs(x[2].y) <= 11 && Mathf.Abs(x[2].x) <=11){
+				GameObject capsule = GameObject.Find("t"+3);
+				capsule.transform.position = new Vector3(-x[2].x,x[2].y,x[2].z);
+				capsule.renderer.enabled = true;
+			}else{
+				GameObject capsule = GameObject.Find("t"+2);
+				capsule.transform.position = new Vector3(-x[3].x,x[3].y,x[3].z);
+				capsule.renderer.enabled = true;
+			}
+		}
+	}
+	
 }
