@@ -13,10 +13,16 @@ public class PlayerController : MonoBehaviour
 	public AudioClip shootSound;
 	bool canShoot = true;
 	
+	public GameObject userButton;
+	Vector3 buttonDiff;
+	
+	float[] buttonPositions = new float[Main.nInputLevels];
 	
 	// Use this for initialization
 	void Start ()
 	{
+		// Read button positions for GUI management
+		buttonDiff = new Vector3(0, GameObject.Find("Meter Hash 1").transform.position.y - GameObject.Find("Meter Hash 0").transform.position.y,0);
 		currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
 		
 		GALevel level = new GALevel ();
@@ -30,7 +36,7 @@ public class PlayerController : MonoBehaviour
 	}
 	// Update is called once per frame
 	void Update ()
-	{		
+	{			
 		if (Input.GetKeyDown ("space")) {
 			if (canShoot) {
 				StartCoroutine ("PlayerShoot");
@@ -41,8 +47,7 @@ public class PlayerController : MonoBehaviour
 			if (currentInputLevel < Main.nInputLevels-1) {
 				currentInputLevel++;
 				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
-				Debug.Log(currentInputLevel);
-				Debug.Log(currentParameter);
+				userButton.transform.Translate(buttonDiff,Space.World);
 			}	
 		}
 			
@@ -50,8 +55,7 @@ public class PlayerController : MonoBehaviour
 			if (currentInputLevel > 0) {
 				currentInputLevel--;
 				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
-				Debug.Log(currentInputLevel);
-				Debug.Log(currentParameter);
+				userButton.transform.Translate(-buttonDiff,Space.World);
 			}	
 		}
 		
