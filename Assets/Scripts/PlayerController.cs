@@ -5,9 +5,12 @@ public class PlayerController : MonoBehaviour
 {
 	
 	public string currentFunction = "linear";
+
 	public float changeRate = 100.0f;
 	public float shootDelay = 0.25f;  // Delay between shots
-    float currentParameter;	
+	//	public float changeRate = 100.0f;
+	
+	float currentParameter;	
 	int currentInputLevel = 3;
 	public AudioClip shootSound;
 	bool canShoot = true;
@@ -71,6 +74,7 @@ public class PlayerController : MonoBehaviour
 		
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			currentFunction = "linear";
+			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "LinearWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
 		    GoogleAnalytics.instance.Dispatch ();
@@ -78,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			currentFunction = "quadratic";
+			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "QuadraticWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
 		    GoogleAnalytics.instance.Dispatch ();			
@@ -85,6 +90,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			currentFunction = "exponential";
+			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "ExponentialWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
 		    GoogleAnalytics.instance.Dispatch ();			
@@ -92,6 +98,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
+			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "SinusoidalWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
 		    GoogleAnalytics.instance.Dispatch ();			
