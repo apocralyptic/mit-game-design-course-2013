@@ -34,23 +34,23 @@ public class Main : MonoBehaviour {
 	void init(){
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		int f = Random.Range(1,5);
+		float s = speed + (0.2f*(int)(score/10));
 		for(int i=0;i< enemies.Length; i++){
 			switch(f){
 			case 1:
-				createLinearEnemy(i);
-				//statusMessage.text = "Linear";
+				s += 1;
+				createNewEnemy(i,"linear",linearInputLevels,s);
 				break;
 			case 2:
-				createQuadraticEnemy(i);
-				//statusMessage.text = "Quadratic";
+				s -= 0.1f;
+				createNewEnemy(i,"quadratic",quadInputLevels,s);
 				break;
 			case 3:
-				createExponentialEnemy(i);
-				//statusMessage.text = "Exponential";
+				s += 0.5f;
+				createNewEnemy(i,"exponential",expInputLevels,s);
 				break;
 			case 4:
-				createSinusoidEnemy(i);
-				//statusMessage.text = "Sinusoid";
+				createNewEnemy(i,"sinusoidal",sinInputLevels,s);
 				break;
 			}
 		}
@@ -100,76 +100,33 @@ public class Main : MonoBehaviour {
 		scoreDisplay.text = "Score: " + score;
 	}
 	
-	void createLinearEnemy(int i){
+	
+	void createNewEnemy(int i, string type, float[] p,float speed){
 		Random.seed = (int)System.DateTime.Now.Ticks;
-		int sign1 = Random.Range(0,100)>50?1:-1;
-		int sign2 = Random.Range(0,100)>50?1:-1;
-		int n1 = sign1 * 10;//Random.Range(3,10);
-		int n2 = sign2 * 10;//Random.Range(3,10);
-		Vector3 pos = new Vector3(n1, n2, 10);
-		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
-		enemies[i].transform.position = pos;
-		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
-		mEnemy.functionType = "linear";
-		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = 2 + speed + (0.2f*(int)(score/10));
-		mEnemy.setEquationFromStartPoint(pos);
 		
-		SetProjectileColor(mEnemy);
-	}
-	
-	void createQuadraticEnemy(int i){
-		Random.seed = (int)System.DateTime.Now.Ticks;
-		int sign1 = Random.Range(0,100)>50?1:-1;
-		int sign2 = Random.Range(0,100)>50?1:-1;
-		int n1 = sign1 * 10;//Random.Range(3,10);
-		int n2 = sign2 * 10;//Random.Range(3,10);
-		Vector3 pos = new Vector3(n1, n2, 10);
-		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
-		enemies[i].transform.position = pos;
-		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
-		mEnemy.functionType = "quadratic";
-		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
-		mEnemy.setEquationFromStartPoint(pos);
-
-		SetProjectileColor(mEnemy);		
-	}
-	
-	void createExponentialEnemy(int i){
-		Random.seed = (int)System.DateTime.Now.Ticks;
-		int sign1 = Random.Range(0,100)>50?1:-1;
-		int sign2 = 1;//Y needs to be always positive
-		int n1 = sign1 * 10;//Random.Range(3,10);
-		int n2 = sign2 * 10;//Random.Range(3,10);
-		Vector3 pos = new Vector3(n1, n2, 10);
-		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
-		enemies[i].transform.position = pos;
-		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
-		mEnemy.functionType = "exponential";
-		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
-		mEnemy.setEquationFromStartPoint(pos);
-
-		SetProjectileColor(mEnemy);	
-	}
-	
-	void createSinusoidEnemy(int i){
-		Random.seed = (int)System.DateTime.Now.Ticks;
-		int sign1 = Random.Range(0,100)>50?1:-1;
-		int n1 = sign1 * 10;
-		float freq = Random.Range(1,100)*0.1f;
-		Vector3 pos = new Vector3(n1, 0, 10);
-		enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
-		enemies[i].transform.position = pos;
-		CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
-		mEnemy.functionType = "sinusoidal";
-		mEnemy.functionParameter = freq;
-		mEnemy.moveDirection = -sign1;
-		mEnemy.moveSpeed = speed + (0.2f*(int)(score/10));
-		mEnemy.setEquationFromStartPoint(pos);
-
-		SetProjectileColor(mEnemy);	
+		int param = Random.Range(1,7);
+		Vector3[] x = new Vector3[4];
+		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,type,p[param]),10);
+		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,type,p[param]),10);
+		x[2] = new Vector3(CurveMotion.getX (9.9f,type,p[param]),9.9f,10);
+		x[3] = new Vector3(CurveMotion.getX (-9.9f,type,p[param]),-9.9f,10);
+		
+		
+		
+		for(int j=0;j<x.Length;j++){
+			if((!float.IsNaN(x[j].y)) && (!float.IsNaN(x[j].x)) &&
+				Mathf.Abs(x[j].y) <= 11 && Mathf.Abs(x[j].x) <=11){
+				enemies[i] = (GameObject)Instantiate(Resources.Load("Enemy"));
+				enemies[i].transform.position = x[j];
+				CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
+				mEnemy.functionType = type;
+				mEnemy.functionParameter = p[param];
+				mEnemy.moveDirection = x[j].x>0?-1:1;
+				mEnemy.moveSpeed = speed;
+				SetProjectileColor(mEnemy);
+				return;	
+			}
+		}
 	}
 	
 	void PlayEnemyDieSound() {
