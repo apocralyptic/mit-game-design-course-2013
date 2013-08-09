@@ -13,6 +13,8 @@ public class Main : MonoBehaviour {
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
 	public Material[] enemyMaterials = new Material[numberOfEnemies];
 	
+	public Material[] tutorials = new Material[4];
+	
 	public static int nInputLevels = 6;  // Number of intensity levels
 	public static float[] linearInputLevels = {-1.1781f, -0.7854f, -0.3927f, 0.3927f, 0.7854f, 1.1781f}; 
 	public static float[] quadInputLevels = {-2.0f, -1.0f, -0.1f, 0.1f, 1.0f, 2.0f}; 
@@ -49,30 +51,11 @@ public class Main : MonoBehaviour {
 		}
 	}
 	
-	void OnGUI () {
-		GUI.color = Color.red;
-		if (GUI.Button (new Rect (10,10,150,50), "1: Linear")) {
-			GameObject obj = GameObject.Find("Player");
-			obj.SendMessage("changeFunction","linear");		
-		}
-		GUI.color = Color.blue;
-		if (GUI.Button (new Rect (10,70,150,50), "2: Quadratic")) {
-			GameObject obj = GameObject.Find("Player");
-			obj.SendMessage("changeFunction","quadratic");
-		}
-		GUI.color = Color.green;
-		if (GUI.Button (new Rect (10,130,150,50), "3: Exponential")) {
-			GameObject obj = GameObject.Find("Player");
-			obj.SendMessage("changeFunction","exponential");
-		}
-		GUI.color = Color.magenta;
-		if (GUI.Button (new Rect (10,190,150,50), "4: Sinusoid")) {
-			GameObject obj = GameObject.Find("Player");
-			obj.SendMessage("changeFunction","sinusoid");
-		}
-	}
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			hideTutorial();
+		}
 		bool create = true;
 		for(int i=0;i< enemies.Length; i++){
 			if(enemies[i] != null){
@@ -235,5 +218,41 @@ public class Main : MonoBehaviour {
 		}		
 
 		return param;
+	}
+	
+	void showTutorial(string type){
+		GameObject tutorial = GameObject.Find("tutorial");
+		if(tutorial == null){
+			tutorial = GameObject.CreatePrimitive(PrimitiveType.Quad);
+			tutorial.name = "tutorial";
+		}
+		tutorial.transform.position = new Vector3(0,0,2);
+		tutorial.transform.localEulerAngles = new Vector3(0,0,0);
+		tutorial.transform.localScale = new Vector3(35f,19f,2f);
+		tutorial.renderer.enabled = true;
+		
+		switch(type){
+		case "linear":
+			tutorial.renderer.material = tutorials[0];
+			break;
+		case "quadratic":
+			tutorial.renderer.material = tutorials[1];
+			break;
+		case "exponential":
+			tutorial.renderer.material = tutorials[2];
+			break;
+		case "sinusoidal":
+			tutorial.renderer.material = tutorials[3];
+			break;
+		}
+		
+		
+	}
+	
+	void hideTutorial(){
+		GameObject tutorial = GameObject.Find("tutorial");
+		if(tutorial != null){
+			Destroy(tutorial);
+		}
 	}
 }
