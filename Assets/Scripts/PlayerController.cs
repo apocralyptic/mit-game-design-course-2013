@@ -125,23 +125,27 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.F1)) {
 			obj = GameObject.Find ("Main Camera");
 			obj.SendMessage("showTutorial","linear");
+			Main.PauseAll();
 		}
 		
 		if (Input.GetKeyDown(KeyCode.F2)) {
 			obj = GameObject.Find ("Main Camera");
 			obj.SendMessage("showTutorial","quadratic");
+			Main.PauseAll();
 		}
 
 		
 		if (Input.GetKeyDown(KeyCode.F3)) {
 			obj = GameObject.Find ("Main Camera");
 			obj.SendMessage("showTutorial","exponential");
+			Main.PauseAll();
 		}
 
 		
 		if (Input.GetKeyDown(KeyCode.F4)) {
 			obj = GameObject.Find ("Main Camera");
 			obj.SendMessage("showTutorial","sinusoidal");
+			Main.PauseAll();
 		}
 		
 	}

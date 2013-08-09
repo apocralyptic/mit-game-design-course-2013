@@ -306,10 +306,14 @@ public class Main : MonoBehaviour {
 	protected bool paused;
 	 
 	void OnPauseGame (){
+		scoreDisplay.text = ("");
+		hiScoreDisplay.text = ("");
 		paused = true;
 	}
 	 
 	void OnResumeGame (){
+		scoreDisplay.text = ("Score: " + score);
+		hiScoreDisplay.text = ("Hi-Score: " + hiScore);
 		paused = false;
 	}
 	
