@@ -5,7 +5,7 @@ public class Main : MonoBehaviour {
 	
 	public int score = 0;
 	public int hiScore = 0;
-	public float speed = 0.5f;
+	public float speed = 0.3f;
 	public GUIText scoreDisplay;
 	public GUIText hiScoreDisplay;
 	public GUIText statusMessage;
@@ -104,7 +104,7 @@ public class Main : MonoBehaviour {
 	void createNewEnemy(int i, string type, float[] p,float speed){
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		
-		int param = Random.Range(1,7);
+		int param = Random.Range(0,6);
 		Vector3[] x = new Vector3[4];
 		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,type,p[param]),10);
 		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,type,p[param]),10);
@@ -142,7 +142,7 @@ public class Main : MonoBehaviour {
 		switch (proj.functionType) {
 		case "linear":
 			theColor = new Color(0.00f,0.80f,0.00f,1.00f);
-			if (proj.transform.position.x < 0) {
+			if (proj.transform.position.x > 0) {
 				theMaterial = enemyMaterials[0];
 				}
 				else {
@@ -156,7 +156,7 @@ public class Main : MonoBehaviour {
 			break;
 		case "quadratic":
 			theColor = new Color(0.00f,0.00f,0.90f,1.00f);
-			if (proj.transform.position.x < 0) {
+			if (proj.transform.position.x > 0) {
 				theMaterial = enemyMaterials[1];
 				}
 				else {
@@ -168,7 +168,7 @@ public class Main : MonoBehaviour {
 			break;*/
 		case "exponential":
 			theColor = new Color(0.90f,0.00f,0.00f,1.00f);
-			if (proj.transform.position.x < 0) {
+			if (proj.transform.position.x > 0) {
 				theMaterial = enemyMaterials[2];
 				}
 				else {
@@ -177,7 +177,7 @@ public class Main : MonoBehaviour {
 			break;
 		case "sinusoidal":
 			theColor = new Color(0.90f,0.00f,0.90f,1.00f);
-			if (proj.transform.position.x < 0) {
+			if (proj.transform.position.x > 0) {
 				theMaterial = enemyMaterials[3];
 				}
 				else {
@@ -230,7 +230,7 @@ public class Main : MonoBehaviour {
 		}
 		tutorial.transform.position = new Vector3(0,0,2);
 		tutorial.transform.localEulerAngles = new Vector3(0,0,0);
-		tutorial.transform.localScale = new Vector3(35f,19f,2f);
+		tutorial.transform.localScale = new Vector3(36f,20f,2f);
 		tutorial.renderer.enabled = true;
 		
 		switch(type){
