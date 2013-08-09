@@ -308,6 +308,7 @@ public class Main : MonoBehaviour {
 	void OnPauseGame (){
 		scoreDisplay.text = ("");
 		hiScoreDisplay.text = ("");
+		statusMessage.text = ("");
 		paused = true;
 	}
 	 
@@ -321,7 +322,7 @@ public class Main : MonoBehaviour {
 	IEnumerator PlayerDeathMessage()
 	{
 		statusMessage.text = ("YOU GOT ROBO-SMACKED!  SCORE RESET.");
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(3);
 		statusMessage.text = ("");
 	}
 	
