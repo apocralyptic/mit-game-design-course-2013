@@ -15,7 +15,7 @@ public class Main : MonoBehaviour {
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
 	public Material[] enemyMaterials = new Material[numberOfEnemies];
 	
-	public Material[] tutorials = new Material[5];
+	public Material[] tutorials = new Material[6];
 	
 	public static int nInputLevels = 6;  // Number of intensity levels
 	public static float[] linearInputLevels = {-1.1781f, -0.7854f, -0.3927f, 0.3927f, 0.7854f, 1.1781f}; 
@@ -23,10 +23,12 @@ public class Main : MonoBehaviour {
 	public static float[] expInputLevels = {-2.0f, -1.0f, -0.5f, 0.5f, 1.0f, 2.0f}; 
 	public static float[] sinInputLevels = {0.383f, 1.0f, 1.5f, 2.0f, 2.5f, 3.1416f}; 	
 	
+	private bool start = false;
 	// Use this for initialization
 	void Start () {
 		//init ();
-		StartCoroutine("showIntro");
+		start = false;
+		showIntro();
 	}
 	
 	void init(){
@@ -57,8 +59,13 @@ public class Main : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			hideTutorial();
-			Main.ResumeAll();
+			if(start==false){
+				showTutorial("intro");
+				start = true;
+			}else{
+				hideTutorial();
+				Main.ResumeAll();
+			}
 		}
 		
 		if (paused) {
@@ -257,6 +264,9 @@ public class Main : MonoBehaviour {
 		case "sinusoidal":
 			tutorial.renderer.material = tutorials[3];
 			break;
+		case "logo":
+			tutorial.renderer.material = tutorials[5];
+			break;
 		case "intro":
 			tutorial.renderer.material = tutorials[4];
 			break;
@@ -266,14 +276,9 @@ public class Main : MonoBehaviour {
 	}
 	
 	
-	IEnumerator showIntro ()
-	{
+	void showIntro (){
 		PauseAll();
-		showTutorial("intro");
-		yield return new WaitForSeconds(10);
-		hideTutorial();
-		Main.ResumeAll();
-		init ();
+		showTutorial("logo");
 	}
 	
 	void hideTutorial(){
