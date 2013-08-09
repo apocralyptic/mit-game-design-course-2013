@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
 	}
 	void Update ()
 	{
+		GameObject obj;
+		
 		if (paused) {
 			return;
 		}
@@ -119,6 +121,29 @@ public class PlayerController : MonoBehaviour
 		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
 			currentFunction = "hyperbolic";
 		}*/
+		
+		if (Input.GetKeyDown(KeyCode.F1)) {
+			obj = GameObject.Find ("Main Camera");
+			obj.SendMessage("showTutorial","linear");
+		}
+		
+		if (Input.GetKeyDown(KeyCode.F2)) {
+			obj = GameObject.Find ("Main Camera");
+			obj.SendMessage("showTutorial","quadratic");
+		}
+
+		
+		if (Input.GetKeyDown(KeyCode.F3)) {
+			obj = GameObject.Find ("Main Camera");
+			obj.SendMessage("showTutorial","exponential");
+		}
+
+		
+		if (Input.GetKeyDown(KeyCode.F4)) {
+			obj = GameObject.Find ("Main Camera");
+			obj.SendMessage("showTutorial","sinusoidal");
+		}
+		
 	}
 	
 	void turnOffLights(){
