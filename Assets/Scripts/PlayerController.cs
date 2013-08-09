@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 			capsule[i].name = "t"+i;
 			capsule[i].transform.position = new Vector3(0,0,0);
 			capsule[i].transform.localEulerAngles = new Vector3(270,0,0);
-			capsule[i].transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+			capsule[i].transform.localScale = new Vector3(0.2f,0.2f,0.2f);
 			capsule[i].renderer.material = (Material)Instantiate (Resources.Load ("target"));
 		}
 		// Read button positions for GUI management
