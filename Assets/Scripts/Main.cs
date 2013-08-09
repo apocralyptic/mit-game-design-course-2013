@@ -272,6 +272,7 @@ public class Main : MonoBehaviour {
 		showTutorial("intro");
 		yield return new WaitForSeconds(10);
 		hideTutorial();
+		Main.ResumeAll();
 		init ();
 	}
 	
