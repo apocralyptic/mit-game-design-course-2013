@@ -15,7 +15,7 @@ public class Main : MonoBehaviour {
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
 	public Material[] enemyMaterials = new Material[numberOfEnemies];
 	
-	public Material[] tutorials = new Material[4];
+	public Material[] tutorials = new Material[5];
 	
 	public static int nInputLevels = 6;  // Number of intensity levels
 	public static float[] linearInputLevels = {-1.1781f, -0.7854f, -0.3927f, 0.3927f, 0.7854f, 1.1781f}; 
@@ -25,7 +25,8 @@ public class Main : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		init ();
+		//init ();
+		StartCoroutine("showIntro");
 	}
 	
 	void init(){
@@ -256,9 +257,22 @@ public class Main : MonoBehaviour {
 		case "sinusoidal":
 			tutorial.renderer.material = tutorials[3];
 			break;
+		case "intro":
+			tutorial.renderer.material = tutorials[4];
+			break;
 		}
 		
 		
+	}
+	
+	
+	IEnumerator showIntro ()
+	{
+		PauseAll();
+		showTutorial("intro");
+		yield return new WaitForSeconds(10);
+		hideTutorial();
+		init ();
 	}
 	
 	void hideTutorial(){
