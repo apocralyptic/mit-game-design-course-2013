@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Main : MonoBehaviour {
 	
-	public int score;
+	public int score = 0;
+	public int hiScore = 0;
 	public float speed = 0.5f;
 	public GUIText scoreDisplay;
+	public GUIText hiScoreDisplay;
 	public GUIText statusMessage;
 	public AudioClip enemyDieSound;
 	public AudioClip playerDieSound;
@@ -75,6 +77,11 @@ public class Main : MonoBehaviour {
 	public int UpdateScore(int i){
 		score = score + i;
 		scoreDisplay.text = ("Score: " + score);
+		if (score >= hiScore) {
+			hiScore = score;
+			hiScoreDisplay.text = ("HI-Score: " + hiScore);
+		}
+
 		return score;
 	}	
 	
