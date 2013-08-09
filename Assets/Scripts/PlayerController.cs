@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 	public float shootDelay = 0.25f;  // Delay between shots
 	//	public float changeRate = 100.0f;
 	
-	float currentParameter;
+	float currentParameter;	
 	int currentInputLevel = 3;
 	public AudioClip shootSound;
 	bool canShoot = true;
@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
 	Vector3 buttonDiff;
 	
 	GameObject[] capsule = new GameObject[4];
-	public Texture[] targetTexture = new Texture[4];
 	//float[] buttonPositions = new float[Main.nInputLevels];
 	
 	// Use this for initialization
@@ -31,11 +30,7 @@ public class PlayerController : MonoBehaviour
 			capsule[i].transform.position = new Vector3(0,0,0);
 			capsule[i].transform.localEulerAngles = new Vector3(270,0,0);
 			capsule[i].transform.localScale = new Vector3(0.1f,0.1f,0.1f);
-			capsule[i].renderer.material = (Material)Instantiate (Resources.Load ("target"));
-			
-			
 		}
-		
 		// Read button positions for GUI management
 		buttonDiff = new Vector3(0, GameObject.Find("Meter Hash 1").transform.position.y - GameObject.Find("Meter Hash 0").transform.position.y,0);
 		currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
@@ -55,6 +50,9 @@ public class PlayerController : MonoBehaviour
 	}
 	void Update ()
 	{
+		if (paused) {
+			return;
+		}
 		if (Input.GetKeyDown ("space")) {
 			if (canShoot) {
 				StartCoroutine ("PlayerShoot");
@@ -150,22 +148,6 @@ public class PlayerController : MonoBehaviour
 		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,currentFunction,currentParameter),4);
 		x[2] = new Vector3(CurveMotion.getX (9.9f,currentFunction,currentParameter),9.9f,4);
 		x[3] = new Vector3(CurveMotion.getX (-9.9f,currentFunction,currentParameter),-9.9f,4);
-		int textureIndex = 0;
-		switch(currentFunction){
-		case "linear":
-			textureIndex = 0;
-			break;
-		case "quadratic":
-			textureIndex = 1;
-			break;
-		case "exponential":
-			textureIndex = 2;
-			break;
-		case "sinusoidal":
-			textureIndex = 3;
-			break;
-		}
-		
 		
 		for(int i=0;i<x.Length;i++){
 			GameObject capsule = GameObject.Find("t"+i);
@@ -173,7 +155,7 @@ public class PlayerController : MonoBehaviour
 				Mathf.Abs(x[i].y) <= 11 && Mathf.Abs(x[i].x) <=11){
 					capsule.transform.position = x[i];
 					capsule.renderer.enabled = true;
-				capsule.renderer.material.mainTexture = targetTexture[textureIndex];
+				
 			}else{
 				capsule.renderer.enabled = false;
 			}
@@ -185,14 +167,22 @@ public class PlayerController : MonoBehaviour
 				GameObject capsule = GameObject.Find("t"+3);
 				capsule.transform.position = new Vector3(-x[2].x,x[2].y,x[2].z);
 				capsule.renderer.enabled = true;
-				capsule.renderer.material.mainTexture = targetTexture[textureIndex];
 			}else{
 				GameObject capsule = GameObject.Find("t"+2);
 				capsule.transform.position = new Vector3(-x[3].x,x[3].y,x[3].z);
 				capsule.renderer.enabled = true;
-				capsule.renderer.material.mainTexture = targetTexture[textureIndex];
 			}
 		}
 	}
 	
+	
+	protected bool paused;
+	 
+	void OnPauseGame (){
+		paused = true;
+	}
+	 
+	void OnResumeGame (){
+		paused = false;
+	}
 }

@@ -55,6 +55,11 @@ public class Main : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			hideTutorial();
+			Main.ResumeAll();
+		}
+		
+		if (paused) {
+			return;
 		}
 		bool create = true;
 		for(int i=0;i< enemies.Length; i++){
@@ -254,5 +259,30 @@ public class Main : MonoBehaviour {
 		if(tutorial != null){
 			Destroy(tutorial);
 		}
+	}
+	
+	
+	public static void PauseAll(){
+		Object[] objects = FindObjectsOfType (typeof(GameObject));
+		foreach (GameObject go in objects) {
+			go.SendMessage ("OnPauseGame", SendMessageOptions.DontRequireReceiver);
+		}	
+	}
+	
+	public static void ResumeAll(){
+		Object[] objects = FindObjectsOfType (typeof(GameObject));
+		foreach (GameObject go in objects) {
+			go.SendMessage ("OnResumeGame", SendMessageOptions.DontRequireReceiver);
+		}	
+	}
+	
+	protected bool paused;
+	 
+	void OnPauseGame (){
+		paused = true;
+	}
+	 
+	void OnResumeGame (){
+		paused = false;
 	}
 }

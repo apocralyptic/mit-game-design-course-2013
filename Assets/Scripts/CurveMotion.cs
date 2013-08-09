@@ -17,6 +17,9 @@ public class CurveMotion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (paused) {
+			return;
+		}
 		float delta = Time.deltaTime*moveSpeed*moveDirection;
 		transform.position = MoveAlongCurve(transform.position,delta,functionType,functionParameter);
 		if(Mathf.Abs(transform.position.x) > 10 || Mathf.Abs(transform.position.y) > 10){
@@ -136,6 +139,15 @@ public class CurveMotion : MonoBehaviour {
 			obj.SendMessage("KillPlayer");
 		}
 	}
-
+	
+	protected bool paused;
+	 
+	void OnPauseGame (){
+		paused = true;
+	}
+	 
+	void OnResumeGame (){
+		paused = false;
+	}
 }
 	

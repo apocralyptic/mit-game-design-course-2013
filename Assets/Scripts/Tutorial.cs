@@ -14,6 +14,7 @@ public class Tutorial : MonoBehaviour {
 	}
 	
 	void OnMouseDown(){
+		Main.PauseAll();
 		GameObject obj = GameObject.Find("Main Camera");
 		obj.SendMessage("showTutorial",this.tag);
 	}
