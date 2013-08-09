@@ -13,7 +13,7 @@ public class Main : MonoBehaviour {
 	public AudioClip playerDieSound;
 	public static int numberOfEnemies = 4;
 	public GameObject[] enemies = new GameObject[numberOfEnemies];
-	public Material[] enemyMaterials = new Material[numberOfEnemies];
+	public Material[] enemyMaterials = new Material[8];
 	
 	public Material[] tutorials = new Material[6];
 	
@@ -185,22 +185,47 @@ public class Main : MonoBehaviour {
 		switch (proj.functionType) {
 		case "linear":
 			theColor = new Color(0.00f,0.80f,0.00f,1.00f);
-			theMaterial = enemyMaterials[0];
+			if (proj.transform.position.x < 0) {
+				theMaterial = enemyMaterials[0];
+				}
+				else {
+						theMaterial = enemyMaterials[4];
+					}
+//			if (proj.transform.position.x < 0) {
+//				scale = proj.transform.localScale;
+//				scale.x = -scale.x;
+//				proj.transform.localScale = scale;
+//			}
 			break;
 		case "quadratic":
 			theColor = new Color(0.00f,0.00f,0.90f,1.00f);
-			theMaterial = enemyMaterials[1];
+			if (proj.transform.position.x < 0) {
+				theMaterial = enemyMaterials[1];
+				}
+				else {
+						theMaterial = enemyMaterials[5];
+					}
 			break;
 		/*case "hyperbolic":
 			functionParameter = start.x * start.y;
 			break;*/
 		case "exponential":
 			theColor = new Color(0.90f,0.00f,0.00f,1.00f);
-			theMaterial = enemyMaterials[2];
+			if (proj.transform.position.x < 0) {
+				theMaterial = enemyMaterials[2];
+				}
+				else {
+						theMaterial = enemyMaterials[6];
+					}
 			break;
 		case "sinusoidal":
 			theColor = new Color(0.90f,0.00f,0.90f,1.00f);
-			theMaterial = enemyMaterials[3];
+			if (proj.transform.position.x < 0) {
+				theMaterial = enemyMaterials[3];
+				}
+				else {
+						theMaterial = enemyMaterials[7];
+					}
 			break;
 		}		
 
