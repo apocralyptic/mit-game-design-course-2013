@@ -36,19 +36,19 @@ public class Main : MonoBehaviour {
 			switch(f){
 			case 1:
 				createLinearEnemy(i);
-				statusMessage.text = "Linear";
+				//statusMessage.text = "Linear";
 				break;
 			case 2:
 				createQuadraticEnemy(i);
-				statusMessage.text = "Quadratic";
+				//statusMessage.text = "Quadratic";
 				break;
 			case 3:
 				createExponentialEnemy(i);
-				statusMessage.text = "Exponential";
+				//statusMessage.text = "Exponential";
 				break;
 			case 4:
 				createSinusoidEnemy(i);
-				statusMessage.text = "Sinusoid";
+				//statusMessage.text = "Sinusoid";
 				break;
 			}
 		}
@@ -88,7 +88,7 @@ public class Main : MonoBehaviour {
 	
 	void KillPlayer(){
 		audio.PlayOneShot(playerDieSound);
-		statusMessage.text = ("YOU HAVE DIED. YOU ARE DEAD.");
+		StartCoroutine("PlayerDeathMessage");
 		score = 0;
 		scoreDisplay.text = "Score: " + score;
 	}
@@ -307,4 +307,13 @@ public class Main : MonoBehaviour {
 	void OnResumeGame (){
 		paused = false;
 	}
+	
+	
+	IEnumerator PlayerDeathMessage()
+	{
+		statusMessage.text = ("YOU GOT ROBO-SMACKED!  SCORE RESET.");
+		yield return new WaitForSeconds(2);
+		statusMessage.text = ("");
+	}
+	
 }
