@@ -21,7 +21,9 @@ public class PlayerController : MonoBehaviour
 	GameObject[] capsule = new GameObject[4];
 	
 	public Texture[] targetTexture = new Texture[4];
-	
+	public Texture lightOff;
+	public Texture lightOn;
+	public GameObject[] lights = new GameObject[4];
 	//float[] buttonPositions = new float[Main.nInputLevels];
 	
 	// Use this for initialization
@@ -81,6 +83,7 @@ public class PlayerController : MonoBehaviour
 		
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			currentFunction = "linear";
+			setLightOn(0);
 			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "LinearWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
@@ -89,6 +92,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			currentFunction = "quadratic";
+			setLightOn(1);
 			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "QuadraticWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
@@ -97,6 +101,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			currentFunction = "exponential";
+			setLightOn(2);
 			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "ExponentialWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
@@ -105,6 +110,7 @@ public class PlayerController : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
+			setLightOn(3);
 			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "SinusoidalWeapon");
 		    GoogleAnalytics.instance.Add (myEvent);
@@ -115,6 +121,16 @@ public class PlayerController : MonoBehaviour
 		}*/
 	}
 	
+	void turnOffLights(){
+		foreach(GameObject g in lights){
+			g.renderer.material.mainTexture = lightOff;	
+		}
+	}
+	
+	void setLightOn(int i){
+		turnOffLights();
+		lights[i].renderer.material.mainTexture = lightOn;
+	}
 	
 	IEnumerator PlayerShoot ()
 	{
