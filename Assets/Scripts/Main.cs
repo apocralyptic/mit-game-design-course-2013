@@ -21,12 +21,11 @@ public class Main : MonoBehaviour {
 	public static float[] linearInputLevels = {-1.1781f, -0.7854f, -0.3927f, 0.3927f, 0.7854f, 1.1781f}; 
 	public static float[] quadInputLevels = {-2.0f, -1.0f, -0.1f, 0.1f, 1.0f, 2.0f}; 
 	public static float[] expInputLevels = {-2.0f, -1.0f, -0.5f, 0.5f, 1.0f, 2.0f}; 
-	public static float[] sinInputLevels = {0.383f, 1.0f, 1.5f, 2.0f, 2.5f, 3.1416f}; 	
-	
+	public static float[] sinInputLevels = {0.2f, 0.3f, 0.5f, 0.7f, 1f, 1.2f}; 	
+	public static float[] sinAmpLevels = {2f, 6f, 7f, 8f, 9f, 10f};
 	private bool start = false;
 	// Use this for initialization
 	void Start () {
-		//init ();
 		start = false;
 		showIntro();
 	}
@@ -39,18 +38,18 @@ public class Main : MonoBehaviour {
 			switch(f){
 			case 1:
 				s += 1;
-				createNewEnemy(i,"linear",linearInputLevels,s);
+				createNewEnemy(i,"linear",s);
 				break;
 			case 2:
 				s -= 0.1f;
-				createNewEnemy(i,"quadratic",quadInputLevels,s);
+				createNewEnemy(i,"quadratic",s);
 				break;
 			case 3:
 				s += 0.5f;
-				createNewEnemy(i,"exponential",expInputLevels,s);
+				createNewEnemy(i,"exponential",s);
 				break;
 			case 4:
-				createNewEnemy(i,"sinusoidal",sinInputLevels,s);
+				createNewEnemy(i,"sinusoidal",s);
 				break;
 			}
 		}
@@ -101,15 +100,15 @@ public class Main : MonoBehaviour {
 	}
 	
 	
-	void createNewEnemy(int i, string type, float[] p,float speed){
+	void createNewEnemy(int i, string type, float speed){
 		Random.seed = (int)System.DateTime.Now.Ticks;
 		
 		int param = Random.Range(0,6);
 		Vector3[] x = new Vector3[4];
-		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,type,p[param]),10);
-		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,type,p[param]),10);
-		x[2] = new Vector3(CurveMotion.getX (9.9f,type,p[param]),9.9f,10);
-		x[3] = new Vector3(CurveMotion.getX (-9.9f,type,p[param]),-9.9f,10);
+		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,type,param),10);
+		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,type,param),10);
+		x[2] = new Vector3(CurveMotion.getX (9.9f,type,param),9.9f,10);
+		x[3] = new Vector3(CurveMotion.getX (-9.9f,type,param),-9.9f,10);
 		
 		
 		
@@ -120,7 +119,7 @@ public class Main : MonoBehaviour {
 				enemies[i].transform.position = x[j];
 				CurveMotion mEnemy = (CurveMotion)enemies[i].GetComponent(typeof(CurveMotion));
 				mEnemy.functionType = type;
-				mEnemy.functionParameter = p[param];
+				mEnemy.functionIndex = param;
 				mEnemy.moveDirection = x[j].x>0?-1:1;
 				mEnemy.moveSpeed = speed;
 				SetProjectileColor(mEnemy);

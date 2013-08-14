@@ -6,7 +6,8 @@ public class CurveMotion : MonoBehaviour {
 	public float moveSpeed;
 	public float moveDirection;
 	public string functionType;
-	public float functionParameter = 0.0f;
+	//public float functionParameter = 0.0f;
+	public int functionIndex = 0;
 	
 	public static float frequencyScaling = 0.1f;
 	public static float exponentialScaling = 0.5f;
@@ -21,40 +22,16 @@ public class CurveMotion : MonoBehaviour {
 			return;
 		}
 		float delta = Time.deltaTime*moveSpeed*moveDirection;
-		transform.position = MoveAlongCurve(transform.position,delta,functionType,functionParameter);
+		transform.position = MoveAlongCurve(transform.position,delta,functionType,functionIndex);
 		if(Mathf.Abs(transform.position.x) > 10 || Mathf.Abs(transform.position.y) > 10){
 			Destroy(this.gameObject);
 		}
 	}
 	
-	public void setEquationFromStartPoint(Vector3 start){
-		switch(functionType){
-		case "linear":
-			//one point must always be (0,0,0) and the other one is the "start"
-			functionParameter = Mathf.Atan(start.y/start.x);
-			break;
-		case "quadratic":
-			functionParameter = start.y / (start.x * start.x);
-			break;
-		/*case "hyperbolic":
-			functionParameter = start.x * start.y;
-			break;*/
-		case "exponential":
-			functionParameter = Mathf.Log(start.y)/(start.x * exponentialScaling);
-			break;
-		case "sinusoidal":
-			
-			float y = 5*Mathf.Sin(2*Mathf.PI*frequencyScaling*functionParameter*start.x);
-			Vector3 n = new Vector3(start.x,y,10);
-			transform.position = n;
-			break;
-		}
-	}
-	// 
-	public static Vector3 MoveAlongCurve(Vector3 currentPosition, float delta, string type, float param) {
+	public static Vector3 MoveAlongCurve(Vector3 currentPosition, float delta, string type,int paramIndex) {
 		
 		Vector3 newPosition = currentPosition;		
-		
+		float param = Main.GetParameterValue(paramIndex,type);
 		switch(type) {
 
 			case "linear":
@@ -79,15 +56,16 @@ public class CurveMotion : MonoBehaviour {
 
 			case "sinusoidal":
 				newPosition.x = currentPosition.x + delta;
-				newPosition.y = 5*Mathf.Sin(2*Mathf.PI*CurveMotion.frequencyScaling*param*newPosition.x);
+				newPosition.y = Main.sinAmpLevels[paramIndex]*Mathf.Sin(2*Mathf.PI*CurveMotion.frequencyScaling*param*newPosition.x);
 				break;
 		}		
 		
 		return newPosition;
 	}
 	
-	public static float getY(float x, string type, float param){
+	public static float getY(float x, string type, int paramIndex){
 		float y = 0.0f;
+		float param = Main.GetParameterValue(paramIndex,type);
 		switch(type) {
 		case "linear":
  			y = Mathf.Tan(param) * x;			
@@ -99,13 +77,14 @@ public class CurveMotion : MonoBehaviour {
 			y = Mathf.Exp(CurveMotion.exponentialScaling*param*x) - 1;
 			break;
 		case "sinusoidal":
-			y = 5*Mathf.Sin(2*Mathf.PI*CurveMotion.frequencyScaling*param*x);
+			y = Main.sinAmpLevels[paramIndex]*Mathf.Sin(2*Mathf.PI*CurveMotion.frequencyScaling*param*x);
 			break;
 		}
 		return y;
 	}
-	public static float getX(float y, string type, float param){
+	public static float getX(float y, string type, int paramIndex){
 		float x = 0.0f;
+		float param = Main.GetParameterValue(paramIndex,type);
 		switch(type) {
 		case "linear":
  			x = y/Mathf.Tan(param);
@@ -117,7 +96,7 @@ public class CurveMotion : MonoBehaviour {
 			x = Mathf.Log(y + 1)/(CurveMotion.exponentialScaling*param);
 			break;
 		case "sinusoidal":
-			x = Mathf.Asin(y/5)/(2*Mathf.PI*CurveMotion.frequencyScaling*param);
+			x = Mathf.Asin(y/Main.sinAmpLevels[paramIndex])/(2*Mathf.PI*CurveMotion.frequencyScaling*param);
 			break;
 		}
 		return x;

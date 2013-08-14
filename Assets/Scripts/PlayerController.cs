@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 	public float shootDelay = 0.25f;  // Delay between shots
 	//	public float changeRate = 100.0f;
 	
-	float currentParameter;	
+	//float currentParameter;	
 	int currentInputLevel = 3;
 	public AudioClip shootSound;
 	bool canShoot = true;
@@ -39,13 +39,8 @@ public class PlayerController : MonoBehaviour
 		}
 		// Read button positions for GUI management
 		buttonDiff = new Vector3(0, GameObject.Find("Meter Hash 1").transform.position.y - GameObject.Find("Meter Hash 0").transform.position.y,0);
-		currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
+		//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
 		
-		GALevel level = new GALevel ();
-		// Add the level to the save queue
-		GoogleAnalytics.instance.Add (level);
-		// Upload ALL the items in the save queue to Google
-		GoogleAnalytics.instance.Dispatch ();
 	}
 	public void changeFunction(string f){
 		this.currentFunction = f;
@@ -95,7 +90,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			if (currentInputLevel < Main.nInputLevels-1) {
 				currentInputLevel++;
-				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
+				//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 				userButton.transform.Translate(buttonDiff,Space.World);
 			}	
 		}
@@ -103,7 +98,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			if (currentInputLevel > 0) {
 				currentInputLevel--;
-				currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
+				//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
 				userButton.transform.Translate(-buttonDiff,Space.World);
 			}	
 		}
@@ -111,37 +106,25 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			currentFunction = "linear";
 			setLightOn(0);
-			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
-			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "LinearWeapon");
-		    GoogleAnalytics.instance.Add (myEvent);
-		    GoogleAnalytics.instance.Dispatch ();
+			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			currentFunction = "quadratic";
 			setLightOn(1);
-			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
-			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "QuadraticWeapon");
-		    GoogleAnalytics.instance.Add (myEvent);
-		    GoogleAnalytics.instance.Dispatch ();			
+			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);			
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			currentFunction = "exponential";
 			setLightOn(2);
-			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
-			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "ExponentialWeapon");
-		    GoogleAnalytics.instance.Add (myEvent);
-		    GoogleAnalytics.instance.Dispatch ();			
+			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);		
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
 			setLightOn(3);
-			currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
-			GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon", "SinusoidalWeapon");
-		    GoogleAnalytics.instance.Add (myEvent);
-		    GoogleAnalytics.instance.Dispatch ();			
+			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);		
 		}
 		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
 			currentFunction = "hyperbolic";
@@ -169,10 +152,6 @@ public class PlayerController : MonoBehaviour
 
 		createProjectile(new Vector3(0,0,10),1,"Projectile");
 		createProjectile(new Vector3(0,0,10),-1,"Projectile");
-
-		GAEvent myEvent = new GAEvent ("GameAction", "FireWeapon");
-		GoogleAnalytics.instance.Add (myEvent);
-		GoogleAnalytics.instance.Dispatch ();
 		
 		yield return new WaitForSeconds(shootDelay);
 		canShoot = true;
@@ -183,7 +162,8 @@ public class PlayerController : MonoBehaviour
 		p1.transform.position = pos;
 		CurveMotion mP1 = (CurveMotion)p1.GetComponent (typeof(CurveMotion));
 		mP1.functionType = currentFunction;
-		mP1.functionParameter = currentParameter;			
+		mP1.functionIndex = currentInputLevel;
+		//mP1.functionParameter = currentParameter;			
 		mP1.moveDirection = direction;		
 
 		GameObject obj = GameObject.Find("Main Camera");
@@ -194,10 +174,10 @@ public class PlayerController : MonoBehaviour
 	
 	void showTarget(){
 		Vector3[] x = new Vector3[4];
-		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,currentFunction,currentParameter),4);
-		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,currentFunction,currentParameter),4);
-		x[2] = new Vector3(CurveMotion.getX (9.9f,currentFunction,currentParameter),9.9f,4);
-		x[3] = new Vector3(CurveMotion.getX (-9.9f,currentFunction,currentParameter),-9.9f,4);
+		x[0] = new Vector3(9.9f,CurveMotion.getY (9.9f,currentFunction,currentInputLevel),4);
+		x[1] = new Vector3(-9.9f,CurveMotion.getY (-9.9f,currentFunction,currentInputLevel),4);
+		x[2] = new Vector3(CurveMotion.getX (9.9f,currentFunction,currentInputLevel),9.9f,4);
+		x[3] = new Vector3(CurveMotion.getX (-9.9f,currentFunction,currentInputLevel),-9.9f,4);
 		
 		int textureIndex = 0;
 	    switch(currentFunction){
