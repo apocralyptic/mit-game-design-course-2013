@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
 
 	public float changeRate = 100.0f;
 	public float shootDelay = 0.25f;  // Delay between shots
-	//	public float changeRate = 100.0f;
 	
 	//float currentParameter;	
 	int currentInputLevel = 3;
@@ -24,7 +23,6 @@ public class PlayerController : MonoBehaviour
 	public Texture lightOff;
 	public Texture lightOn;
 	public GameObject[] lights = new GameObject[4];
-	//float[] buttonPositions = new float[Main.nInputLevels];
 	
 	// Use this for initialization
 	void Start ()
@@ -39,8 +37,6 @@ public class PlayerController : MonoBehaviour
 		}
 		// Read button positions for GUI management
 		buttonDiff = new Vector3(0, GameObject.Find("Meter Hash 1").transform.position.y - GameObject.Find("Meter Hash 0").transform.position.y,0);
-		//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
-		
 	}
 	public void changeFunction(string f){
 		this.currentFunction = f;
@@ -90,7 +86,6 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			if (currentInputLevel < Main.nInputLevels-1) {
 				currentInputLevel++;
-				//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 				userButton.transform.Translate(buttonDiff,Space.World);
 			}	
 		}
@@ -98,7 +93,6 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			if (currentInputLevel > 0) {
 				currentInputLevel--;
-				//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction); 
 				userButton.transform.Translate(-buttonDiff,Space.World);
 			}	
 		}
@@ -106,25 +100,21 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			currentFunction = "linear";
 			setLightOn(0);
-			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			currentFunction = "quadratic";
-			setLightOn(1);
-			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);			
+			setLightOn(1);		
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			currentFunction = "exponential";
-			setLightOn(2);
-			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);		
+			setLightOn(2);	
 		}
 
 		if (Input.GetKeyDown (KeyCode.Alpha4)) {
 			currentFunction = "sinusoidal";
-			setLightOn(3);
-			//currentParameter = Main.GetParameterValue(currentInputLevel,currentFunction);		
+			setLightOn(3);	
 		}
 		/*if (Input.GetKeyDown (KeyCode.Alpha5)) {
 			currentFunction = "hyperbolic";
@@ -162,8 +152,7 @@ public class PlayerController : MonoBehaviour
 		p1.transform.position = pos;
 		CurveMotion mP1 = (CurveMotion)p1.GetComponent (typeof(CurveMotion));
 		mP1.functionType = currentFunction;
-		mP1.functionIndex = currentInputLevel;
-		//mP1.functionParameter = currentParameter;			
+		mP1.functionIndex = currentInputLevel;	
 		mP1.moveDirection = direction;		
 
 		GameObject obj = GameObject.Find("Main Camera");

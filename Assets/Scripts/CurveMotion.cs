@@ -6,7 +6,6 @@ public class CurveMotion : MonoBehaviour {
 	public float moveSpeed;
 	public float moveDirection;
 	public string functionType;
-	//public float functionParameter = 0.0f;
 	public int functionIndex = 0;
 	
 	public static float frequencyScaling = 0.1f;
